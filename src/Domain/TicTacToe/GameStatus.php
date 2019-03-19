@@ -5,14 +5,41 @@ namespace App\TicTacToe;
 
 class GameStatus
 {
+    use Player;
+    use BoardTrait;
+
     /**
      * @var int $status
      */
     private $status = 0;
+    /**
+     * @var bool $hasWinner
+     */
+    private $hasWinner;
+
+    /**
+     * @var array $boardState ;
+     */
+    private $boardState;
 
     public function setActualGameStatus(array $board)
     {
-           
+        $this->boardState = $board;
+        $this->setWinner();
+
+        var_dump($this->isFullBoardState());
+        var_dump($this->hasWinner);
+
+        if ($this->hasWinner) {
+            if ($this->playerUnit == 'X') {
+                $this->setStatus(\App\Enum\GameStatus::PLAYER_X);
+            } else if ($this->playerUnit == 'O') {
+                $this->setStatus(\App\Enum\GameStatus::PLAYER_O);
+            }
+        } else if ($this->isFullBoardState()) {
+            echo "\n ta cheio \n";
+            $this->setStatus(\App\Enum\GameStatus::DRAW);
+        }
     }
 
     /**
@@ -20,18 +47,20 @@ class GameStatus
      */
     private function setWinner(): void
     {
-        $res = $this->executeHorizontalBoardStateWinner();
+        $hasWinner = $this->executeHorizontalBoardStateWinner();
 
-        if (!$res) {
-            $res = $this->executeVerticalBoardStateWinner();
+        if (!$hasWinner) {
+            $hasWinner = $this->executeVerticalBoardStateWinner();
         }
 
-        if (!$res) {
-            $res = $this->executeLeftToRightDiagonalBoardStateWinner();
+        if (!$hasWinner) {
+            $hasWinner = $this->executeLeftToRightDiagonalBoardStateWinner();
         }
-        if (!$res) {
-            $this->executeRightToLeftDiagonalBoardStateWinner();
+        if (!$hasWinner) {
+            $hasWinner = $this->executeRightToLeftDiagonalBoardStateWinner();
         }
+
+        $this->hasWinner = $hasWinner;
     }
 
     /**
@@ -54,14 +83,15 @@ class GameStatus
      * Set horizontal line winner
      *
      * @return bool
+     * @throws \Exception
      */
     private function executeHorizontalBoardStateWinner(): bool
     {
-        $boardState = $this->getBoardState();
+        $board = $this->boardState;
 
         for ($i = 0; $i < 3; $i++) {
-            if ($boardState[$i][0] != '' && $boardState[$i][0] == $boardState[$i][1] && $boardState[$i][1] == $boardState[$i][2]) {
-                $this->setPlayerUnitGameStatus($boardState[$i][0]);
+            if ($board[$i][0] != '' && $board[$i][0] == $board[$i][1] && $board[$i][1] == $board[$i][2]) {
+                $this->setPlayerUnit($board[$i][0]);
 
                 return true;
             }
@@ -71,15 +101,17 @@ class GameStatus
     }
 
     /**
-     * Set vertical line winner
-     *
      * @return bool
+     *
+     * @throws \Exception
      */
     private function executeVerticalBoardStateWinner(): bool
     {
+        $board = $this->boardState;
+
         for ($i = 0; $i < 3; $i++) {
-            if ($this->boardState[0][$i] != '' && $this->boardState[0][$i] == $this->boardState[1][$i] && $this->boardState[1][$i] == $this->boardState[2][$i]) {
-                $this->setPlayerUnitGameStatus($this->boardState[0][$i]);
+            if ($board[0][$i] != '' && $board[0][$i] == $board[1][$i] && $board[1][$i] == $board[2][$i]) {
+                $this->setPlayerUnit($board[0][$i]);
 
                 return true;
             }
@@ -92,11 +124,14 @@ class GameStatus
      * Set left to right diagonal winner
      *
      * @return bool
+     * @throws \Exception
      */
     private function executeLeftToRightDiagonalBoardStateWinner(): bool
     {
-        if ($this->boardState[0][0] != '' && $this->boardState[0][0] == $this->boardState[1][1] && $this->boardState[1][1] == $this->boardState[2][2]) {
-            $this->setPlayerUnitGameStatus($this->boardState[0][0]);
+        $board = $this->boardState;
+
+        if ($board[0][0] != '' && $board[0][0] == $board[1][1] && $board[1][1] == $board[2][2]) {
+            $this->setPlayerUnit($board[0][0]);
 
             return true;
         }
@@ -108,11 +143,14 @@ class GameStatus
      * Set right to left diagonal winner
      *
      * @return bool
+     * @throws \Exception
      */
     private function executeRightToLeftDiagonalBoardStateWinner(): bool
     {
-        if ($this->boardState[2][0] != '' && $this->boardState[2][0] == $this->boardState[1][1] && $this->boardState[1][1] == $this->boardState[0][2]) {
-            $this->setPlayerUnitGameStatus($this->boardState[2][0]);
+        $board = $this->boardState;
+
+        if ($board[2][0] != '' && $board[2][0] == $board[1][1] && $board[1][1] == $board[0][2]) {
+            $this->setPlayerUnit($board[2][0]);
 
             return true;
         }

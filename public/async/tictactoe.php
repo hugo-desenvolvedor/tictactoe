@@ -10,6 +10,6 @@ $game->makeCPUMove($board);
 
 die(json_encode([
     'lastCPUMove' => $game->getLastCPUMove(),
-    'gameStatus' => $game->getGameStatus(),
+    'gameStatus' => $game->getStatus(),
     'boardState' => $game->getBoardState()
 ]));

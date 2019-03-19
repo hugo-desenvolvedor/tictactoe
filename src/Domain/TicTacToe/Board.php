@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\TicTacToe;
 
-trait Board
+trait BoardTrait
 {
     /**
      * @var array $boardState
@@ -49,5 +49,24 @@ trait Board
         [$row, $column, $playerUnit] = $move;
 
         $this->boardState[$row][$column] = $playerUnit;
+    }
+
+    /**
+     * Verify if some move can be done
+     *
+     * @return bool
+     */
+    private function isFullBoardState(): bool
+    {
+        $size = 0;
+        foreach ($this->boardState as $rowKey => $rowValue) {
+            foreach ($rowValue as $columnKey => $columnValue) {
+                if ($columnValue == 'X' || $columnValue == 'O') {
+                    $size++;
+                }
+            }
+        }
+
+        return $size == 9 ? true : false;
     }
 }

@@ -31,7 +31,7 @@ class TicTacToeTest extends TestCase
         ];
 
         $this->assertEquals('X', $game->getLastCPUMove()[2]);
-        $this->assertEquals(GameStatus::DEFAULT, $game->getGameStatus());
+        $this->assertEquals(GameStatus::DEFAULT, $game->getStatus());
         $this->assertEquals($expectedBoard, $game->getBoardState());
     }
 
@@ -57,7 +57,7 @@ class TicTacToeTest extends TestCase
             }
         }
         $this->assertEquals('X', $game->getLastCPUMove()[2]);
-        $this->assertEquals(GameStatus::DEFAULT, $game->getGameStatus());
+        $this->assertEquals(GameStatus::DEFAULT, $game->getStatus());
         $this->assertEquals('X', $expectedPlayerUnit);
     }
 
@@ -72,7 +72,7 @@ class TicTacToeTest extends TestCase
         $game = new Game(LevelEnum::MEDIUM, 'X');
         $game->makeCPUMove($expectedBoard);
 
-        $this->assertEquals(GameStatus::PLAYER_X, $game->getGameStatus());
+        $this->assertEquals(GameStatus::PLAYER_X, $game->getStatus());
         $this->assertEquals($expectedBoard, $game->getBoardState());
     }
 
@@ -88,7 +88,7 @@ class TicTacToeTest extends TestCase
         $game->makeCPUMove($expectedBoard);
 
         $this->assertEquals($expectedBoard, $game->getBoardState());
-        $this->assertEquals(GameStatus::PLAYER_X, $game->getGameStatus());
+        $this->assertEquals(GameStatus::PLAYER_X, $game->getStatus());
     }
 
     public function testIfPlayerUnitWinsInLeftToRightDiagonalBeforeCpuMovement(): void
@@ -103,7 +103,7 @@ class TicTacToeTest extends TestCase
         $game->makeCPUMove($expectedBoard);
 
         $this->assertEquals($expectedBoard, $game->getBoardState());
-        $this->assertEquals(GameStatus::PLAYER_O, $game->getGameStatus());
+        $this->assertEquals(GameStatus::PLAYER_O, $game->getStatus());
     }
 
     public function testIfPlayerUnitWinsInRightToLeftDiagonalBeforeCpuMovement(): void
@@ -118,7 +118,7 @@ class TicTacToeTest extends TestCase
         $game->makeCPUMove($expectedBoard);
 
         $this->assertEquals($expectedBoard, $game->getBoardState());
-        $this->assertEquals(GameStatus::PLAYER_O, $game->getGameStatus());
+        $this->assertEquals(GameStatus::PLAYER_O, $game->getStatus());
     }
 
     public function testIfPlayerUnitWinsSettingLastCell(): void
@@ -135,30 +135,30 @@ class TicTacToeTest extends TestCase
         $expectedBoard[2][2] = 'X';
 
         $this->assertEquals($expectedBoard, $game->getBoardState());
-        $this->assertEquals(GameStatus::PLAYER_X, $game->getGameStatus());
+        $this->assertEquals(GameStatus::PLAYER_X, $game->getStatus());
     }
 
     public function testIfGameStatusIsDraw(): void
     {
         $expectedBoard = [
-            0 => ['X', 'X', 'O'],
+            0 => ['O', 'X', 'O'],
             1 => ['X', 'O', 'X'],
-            2 => ['O', 'O', 'X']
+            2 => ['X', 'O', 'X']
         ];
 
         $game = new Game(LevelEnum::MEDIUM, 'X');
         $game->makeCPUMove($expectedBoard);
 
         $this->assertEquals($expectedBoard, $game->getBoardState());
-        $this->assertEquals(GameStatus::DRAW, $game->getGameStatus());
+        $this->assertEquals(GameStatus::DRAW, $game->getStatus());
     }
 
     public function testIfPlayerUnitDrawSettingLastCell(): void
     {
         $expectedBoard = [
-            0 => ['X', 'X', 'O'],
+            0 => ['O', 'X', 'O'],
             1 => ['X', 'O', 'X'],
-            2 => ['O', 'O', '']
+            2 => ['X', 'O', '']
         ];
 
         $game = new Game(LevelEnum::MEDIUM, 'X');
@@ -166,7 +166,7 @@ class TicTacToeTest extends TestCase
 
         $expectedBoard[2][2] = 'X';
 
-        $this->assertEquals(GameStatus::DRAW, $game->getGameStatus());
+        $this->assertEquals(GameStatus::DRAW, $game->getStatus());
         $this->assertEquals($expectedBoard, $game->getBoardState());
     }
 }

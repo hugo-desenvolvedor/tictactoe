@@ -5,7 +5,7 @@ namespace App\TicTacToe;
 
 class Game
 {
-    use Board;
+    use BoardTrait;
     use Player;
     //use GameStatus;
 
@@ -30,7 +30,7 @@ class Game
      * @param string $cpuPlayer
      * @throws \Exception
      */
-    public function __construct($level = 0, string $cpuPlayer)
+    public function __construct($level, string $cpuPlayer)
     {
         $this->gameStatus = new GameStatus();
 
@@ -49,12 +49,12 @@ class Game
      */
     public function makeCPUMove(array $boardState)
     {
-        $this->setBoardState($this->boardState);
-        $this->setActualGameStatus($this->boardState);
+        $this->boardState = $boardState;
+        $this->gameStatus->setActualGameStatus($this->boardState);
 
         $move = null;
 
-        if ($this->getGameStatus() == \App\Enum\GameStatus::DEFAULT) {
+        if ($this->gameStatus->getStatus() == \App\Enum\GameStatus::DEFAULT) {
             switch ($this->level) {
                 case 0 :
                     $move = new SequentialMove();
@@ -65,7 +65,7 @@ class Game
             $this->lastCPUMove = $move->makeMove($boardState, $this->getPlayerUnit());
             $this->setMoveInBoardState($this->lastCPUMove);
 
-            $this->setActualGameStatus();
+            $this->gameStatus->setActualGameStatus($this->boardState);
         }
     }
 
@@ -86,28 +86,9 @@ class Game
     }
 
     /**
-     * Verify if some move can be done
-     *
-     * @return bool
-     */
-    private function isFullBoardState(): bool
-    {
-        $size = 0;
-        foreach ($this->boardState as $rowKey => $rowValue) {
-            foreach ($rowValue as $columnKey => $columnValue) {
-                if ($columnValue == 'X' || $columnValue == 'O') {
-                    $size++;
-                }
-            }
-        }
-
-        return $size == 9 ? true : false;
-    }
-
-    /**
      * @return int
      */
-    public function getGameStatus(): int
+    public function getStatus(): int
     {
         return $this->gameStatus->getStatus();
     }
