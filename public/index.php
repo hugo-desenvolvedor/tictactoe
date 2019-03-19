@@ -28,7 +28,7 @@
 <script>
     var boardState = [['', '', ''], ['', '', ''], ['', '', '']];
     var gameStatus = 0;
-    var level = 1;
+    var level = 0;
 
     $(function () {
         $(".column").click(function () {
@@ -52,11 +52,13 @@
                 boardState: boardState
             },
             success: function (data) {
-                console.log('data', data);
+                //console.log('data', data);
 
                 response = JSON.parse(data);
                 gameStatus = response.gameStatus;
                 setBoardStateCell(response.lastCPUMove[0], response.lastCPUMove[1], response.lastCPUMove[2]);
+
+                showWinner();
             },
             error: function (error) {
                 console.log('error', error);
@@ -86,8 +88,7 @@
         } else {
             cell.css("background-image", "url(img/x.png)");
         }
-        console.log('setBackgroundCell', gameStatus);
-        showWinner();
+        //showWinner();
     }
 
     function setBoardStateCell(row, column, playerUnit) {
@@ -103,73 +104,9 @@
 
         if(gameStatus == 1 || gameStatus == 3)
         {
+            boardState[row][column] = playerUnit;
             setBackgroundCell(row, column, playerUnit);
         }
 
     }
-
-
-    /*
-    $(function(){
-
-        var matrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
-        var winner = false;
-        if(winner === false) {
-            $(".column").click(function() {
-
-                var line = $(this).data('value').toString();
-                var row = line.charAt(0);
-                var column = line.charAt(1);
-
-                if(matrix[row][column] != 0)
-                {
-                    alert("Try a new move");
-                    return false;
-                }
-                matrix[row][column] = 1;
-
-                $.ajax({
-                    method: "POST",
-                    url: "move.php",
-                    data: {
-                        line: line,
-                        row: row,
-                        column: column,
-                        matrix: matrix
-                    },
-                    success: function(data){
-                        if(winner === false) {
-                            var columnX = $(".column[data-value='" + line +"']");
-                            columnX.css("background-image", "url(x.png)");
-
-                            var response = JSON.parse(data);
-
-                            console.log('response', response);
-                            console.log('matrix', matrix);
-
-                            if (response.winner === true) {
-                                winner = true;
-                                alert('We have a winner');
-                            } else {
-                                if (response.row !== false && response.column !== false) {
-                                    matrix[response.row][response.column] = 2;
-                                    var lineO = response.row + "" + response.column;
-
-                                    var columnO = $(".column[data-value='" + lineO +"']");
-                                    columnO.css("background-image", "url(o.png)");
-                                }
-                            }
-                        } else {
-                            alert('We have a winner');
-                        }
-                    },
-                    error: function(data){
-                        console.log('error', data);
-                    }
-                });
-
-            });
-        }
-    });
-*/
 </script>

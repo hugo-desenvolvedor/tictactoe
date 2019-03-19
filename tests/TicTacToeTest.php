@@ -38,7 +38,6 @@ class TicTacToeTest extends TestCase
         $this->assertEquals($expectedBoard, $board->getBoardState());
     }
 
-
     public function testMakeAMoveInEasyLevel(): void
     {
         $game = new Game(LevelEnum::EASY, 'X');
