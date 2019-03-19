@@ -3,19 +3,17 @@ declare(strict_types=1);
 
 namespace App\TicTacToe;
 
-trait BoardTrait
+class Board
 {
     /**
      * @var array $boardState
      */
-    private $boardState;
+    private $boardState = [];
 
     /**
-     * @return array
      * @throws \Exception
      */
-    public function getBoardState(): array
-    {
+    private function validate(){
         $boardStateLength = count($this->boardState);
 
         if ($boardStateLength != 3) {
@@ -27,16 +25,26 @@ trait BoardTrait
                 throw new \Exception('Invalid number of columns in board');
             }
         }
+    }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    public function getBoardState(): array
+    {
         return $this->boardState;
     }
 
     /**
      * @param array $boardState
+     * @throws \Exception
      */
     public function setBoardState(array $boardState): void
     {
         $this->boardState = $boardState;
+
+        $this->validate();
     }
 
     /**
@@ -52,11 +60,11 @@ trait BoardTrait
     }
 
     /**
-     * Verify if some move can be done
+     * Verify if the board state is full
      *
      * @return bool
      */
-    private function isFullBoardState(): bool
+    public function isFullBoardState(): bool
     {
         $size = 0;
         foreach ($this->boardState as $rowKey => $rowValue) {

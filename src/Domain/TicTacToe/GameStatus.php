@@ -6,7 +6,6 @@ namespace App\TicTacToe;
 class GameStatus
 {
     use Player;
-    use BoardTrait;
 
     /**
      * @var int $status
@@ -22,23 +21,19 @@ class GameStatus
      */
     private $boardState;
 
-    public function setActualGameStatus(array $board)
+    public function setActualGameStatus(Board $board)
     {
-        $this->boardState = $board;
+        $this->boardState = $board->getBoardState();
         $this->setWinner();
-
-        var_dump($this->isFullBoardState());
-        var_dump($this->hasWinner);
 
         if ($this->hasWinner) {
             if ($this->playerUnit == 'X') {
-                $this->setStatus(\App\Enum\GameStatus::PLAYER_X);
+                $this->setStatus(\App\Enum\GameStatusEnum::PLAYER_X);
             } else if ($this->playerUnit == 'O') {
-                $this->setStatus(\App\Enum\GameStatus::PLAYER_O);
+                $this->setStatus(\App\Enum\GameStatusEnum::PLAYER_O);
             }
-        } else if ($this->isFullBoardState()) {
-            echo "\n ta cheio \n";
-            $this->setStatus(\App\Enum\GameStatus::DRAW);
+        } else if ($board->isFullBoardState()) {
+            $this->setStatus(\App\Enum\GameStatusEnum::DRAW);
         }
     }
 

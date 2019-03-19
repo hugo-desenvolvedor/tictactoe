@@ -5,9 +5,7 @@ namespace App\TicTacToe;
 
 class Game
 {
-    use BoardTrait;
     use Player;
-    //use GameStatus;
 
     /**
      * @var int $level
@@ -25,36 +23,42 @@ class Game
     private $gameStatus;
 
     /**
+     * @var Board $board
+     */
+    private $board;
+
+    /**
      * Game constructor.
+     *
      * @param int $level
      * @param string $cpuPlayer
      * @throws \Exception
      */
-    public function __construct($level, string $cpuPlayer)
+    public function __construct(int $level, string $cpuPlayer)
     {
         $this->gameStatus = new GameStatus();
-
+        $this->board = new Board();
         $this->level = $level;
-        $this->setPlayerUnit($cpuPlayer);
 
-        $this->boardState = [
-            ['', '', ''],
-            ['', '', ''],
-            ['', '', '']
-        ];
+        $this->setPlayerUnit($cpuPlayer);
     }
 
     /**
+     * Make a CPU move
+     *
      * @param array $boardState
+     * @throws \Exception
      */
     public function makeCPUMove(array $boardState)
     {
-        $this->boardState = $boardState;
-        $this->gameStatus->setActualGameStatus($this->boardState);
+        $this->board->setBoardState($boardState);
+
+        $this->gameStatus->setActualGameStatus($this->board);
 
         $move = null;
 
-        if ($this->gameStatus->getStatus() == \App\Enum\GameStatus::DEFAULT) {
+        if ($this->gameStatus->getStatus() == \App\Enum\GameStatusEnum::DEFAULT) {
+            //TODO: Caso clássico de Factory
             switch ($this->level) {
                 case 0 :
                     $move = new SequentialMove();
@@ -62,10 +66,12 @@ class Game
                 default :
                     $move = new RandomMove();
             }
-            $this->lastCPUMove = $move->makeMove($boardState, $this->getPlayerUnit());
-            $this->setMoveInBoardState($this->lastCPUMove);
 
-            $this->gameStatus->setActualGameStatus($this->boardState);
+            $this->lastCPUMove = $move->makeMove($boardState, $this->getPlayerUnit());
+
+            $this->board->setMoveInBoardState($this->lastCPUMove);
+
+            $this->gameStatus->setActualGameStatus($this->board);
         }
     }
 
@@ -91,5 +97,10 @@ class Game
     public function getStatus(): int
     {
         return $this->gameStatus->getStatus();
+    }
+
+    public function getBoardState()
+    {
+        return $this->board->getBoardState();
     }
 }
