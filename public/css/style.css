@@ -1,0 +1,17 @@
+.grid {
+    border: 1px solid red;
+}
+
+.row {
+    display: flex;
+    width: 306px;
+    flex-direction: row;
+}
+
+.column {
+    width: 100px;
+    height: 100px;
+    margin: 1px;
+    border: 1px solid black;
+    cursor: hand;
+}
