@@ -1,17 +1,8 @@
 <?php
 
-use Slim\Http\Request;
-use Slim\Http\Response;
 use App\Controllers\AuthController;
+use App\Controllers\TicTacToeController;
 
 $app->post('/auth', AuthController::class . ':auth');
-
-/*
-$app->get('/[{name}]', function (Request $request, Response $response, array $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
-
-    // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
-});
-*/
+$app->post('/tictactoe/move', TicTacToeController::class . ':move');
+$app->post('/tictactoe/game-status', TicTacToeController::class . ':gameStatus');
