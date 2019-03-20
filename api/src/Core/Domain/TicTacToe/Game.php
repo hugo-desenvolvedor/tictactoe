@@ -57,7 +57,7 @@ class Game
 
         $move = null;
 
-        if ($this->gameStatus->getStatus() == \App\Enum\GameStatusEnum::DEFAULT) {
+        if ($this->gameStatus->getStatus() == \App\Enums\GameStatusEnum::DEFAULT) {
             //TODO: Caso clássico de Factory
             switch ($this->level) {
                 case 0 :

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Enum;
+namespace App\Enums;
 
-abstract class LevelEnum
+abstract class LevelEnum extends BasicEnum
 {
     const EASY = 0;
     const MEDIUM = 1;

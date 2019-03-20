@@ -13,7 +13,7 @@ class TicTacToeController
     /**
      * @param Request $request
      * @param Response $response
-     * @return mixed
+     * @return Response
      */
     public function move(Request $request, Response $response)
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Enum;
+namespace App\Enums;
 
-abstract class GameStatusEnum
+abstract class GameStatusEnum extends BasicEnum
 {
     const DEFAULT = 0;
     const PLAYER_X = 1;

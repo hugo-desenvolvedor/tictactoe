@@ -28,12 +28,12 @@ class GameStatus
 
         if ($this->hasWinner) {
             if ($this->playerUnit == 'X') {
-                $this->setStatus(\App\Enum\GameStatusEnum::PLAYER_X);
+                $this->setStatus(\App\Enums\GameStatusEnum::PLAYER_X);
             } else if ($this->playerUnit == 'O') {
-                $this->setStatus(\App\Enum\GameStatusEnum::PLAYER_O);
+                $this->setStatus(\App\Enums\GameStatusEnum::PLAYER_O);
             }
         } else if ($board->isFullBoardState()) {
-            $this->setStatus(\App\Enum\GameStatusEnum::DRAW);
+            $this->setStatus(\App\Enums\GameStatusEnum::DRAW);
         }
     }
 

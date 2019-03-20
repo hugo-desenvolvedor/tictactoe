@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use \App\TicTacToe\{Game, GameStatus, Board};
-use \App\Enum\{LevelEnum, GameStatusEnum};
+use \App\Enums\{LevelEnum, GameStatusEnum};
 use PHPUnit\Framework\TestCase;
 
 class TicTacToeTest extends TestCase
