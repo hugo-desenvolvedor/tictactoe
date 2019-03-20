@@ -1,10 +1,10 @@
 <?php
-declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
+namespace Tests\Unit;
 
 use \App\TicTacToe\{Game, GameStatus, Board};
 use \App\Enum\{LevelEnum, GameStatusEnum};
+use PHPUnit\Framework\TestCase;
 
 class TicTacToeTest extends TestCase
 {
