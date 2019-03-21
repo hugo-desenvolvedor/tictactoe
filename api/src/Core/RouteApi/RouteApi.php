@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\RouteApi\TicTacToe;
+namespace App\RouteApi;
 
 abstract class RouteApi
 {

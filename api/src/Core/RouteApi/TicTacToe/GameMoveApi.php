@@ -3,10 +3,16 @@ declare(strict_types=1);
 
 namespace App\RouteApi\TicTacToe;
 
+use App\RouteApi\RouteApi;
 use App\TicTacToe\Game;
 
 class GameMove extends RouteApi
 {
+    /**
+     * @param array|mixed[] $params
+     * @return mixed|void
+     * @throws \Exception
+     */
     public function handle($params)
     {
         $board = $params['boardState'];
