@@ -70,7 +70,6 @@ function setBoardStateCell(row, column, playerUnit) {
     if (gameStatus == 0) {
         if (boardState[row][column] != '') {
             $(".message").html('Try a new move').removeClass('hidden');
-            return false;
         }
         boardState[row][column] = playerUnit;
         setBackgroundCell(row, column, playerUnit);
