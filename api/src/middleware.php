@@ -4,7 +4,6 @@
  */
 $app->add(new \App\Middlewares\Request\Json());
 
-
 /**
  * Responses
  */

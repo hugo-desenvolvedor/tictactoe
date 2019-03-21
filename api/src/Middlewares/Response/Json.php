@@ -19,6 +19,7 @@ class Json
      */
     public function __invoke(Request $request, Response $response, callable $next)
     {
+
         $response = $next($request, $response);
 
         $responseData = json_decode($response->getBody()->__toString(), true);

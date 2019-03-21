@@ -15,14 +15,13 @@ class Exception
      * @param Request $request
      * @param Response $response
      * @param callable $next
-     * @return Response
+     * @return ResponseInterface
      */
     public function __invoke(Request $request, Response $response, callable $next)
     {
         $error = null;
         try {
-            $next($request, $response);
-
+            $response = $next($request, $response);
             $status = $response->getStatusCode();
         } catch (\Throwable $e) {
             $error = [
@@ -31,11 +30,11 @@ class Exception
             ];
 
             $status = $e->getCode() > 0 ? $e->getCode() : 400;
-        } finally {
-            $responseData = json_decode($response->getBody()->__toString(), true) ?? [];
-            $responseData['error'] = $responseData['error'] ?? $error;
-
-            return $response->withJson($responseData, $status);
         }
+
+        $responseData = json_decode($response->getBody()->__toString(), true) ?? [];
+        $responseData['error'] = $responseData['error'] ?? $error;
+
+        return $response->withJson($responseData, $status);
     }
 }

@@ -23,7 +23,7 @@ class TicTacToeController
         $errors = $validator->validate($params);
 
         if ($errors) {
-            return $response->withJson($errors);
+            return $response->withJson($errors, 404);
         }
 
         return $response->withJson($params);
