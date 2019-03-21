@@ -2,7 +2,7 @@
 /**
  * Requests
  */
-$app->add(new \App\Middlewares\Request\Json());
+//$app->add(new \App\Middlewares\Request\Json());
 
 /**
  * Responses

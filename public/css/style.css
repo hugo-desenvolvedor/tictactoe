@@ -1,3 +1,7 @@
+.main {
+    border: 1px solid blue;
+}
+
 .grid {
     border: 1px solid red;
 }
@@ -14,4 +18,12 @@
     margin: 1px;
     border: 1px solid black;
     cursor: hand;
+}
+
+.restart {
+
+}
+
+.hidden {
+    display: block;
 }
