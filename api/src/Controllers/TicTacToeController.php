@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controllers;
-
+use App\RouteApi\TicTacToe\GameMove;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use App\Validators\TicTacToeMoveValidator;
@@ -14,6 +14,7 @@ class TicTacToeController
      * @param Request $request
      * @param Response $response
      * @return Response
+     * @throws \Exception
      */
     public function move(Request $request, Response $response)
     {
@@ -26,7 +27,10 @@ class TicTacToeController
             return $response->withJson($errors, 404);
         }
 
-        return $response->withJson($params);
+        $gameMove = new GameMove();
+        $gameMove->handle($params);
+
+        return $response->withJson($gameMove->getPayload());
     }
 
     /**

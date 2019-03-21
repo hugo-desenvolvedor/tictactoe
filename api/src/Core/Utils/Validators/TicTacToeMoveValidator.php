@@ -11,7 +11,7 @@ class TicTacToeMoveValidator extends ApiValidator
     protected function rules(): array
     {
         return [
-            'board' => 'required|array',
+            'boardState' => 'required|array',
             'level' => 'required|integer'
         ];
     }
