@@ -1,8 +1,14 @@
 var boardState = [['', '', ''], ['', '', ''], ['', '', '']];
 var gameStatus = 0;
-var level = 0;
+var level = 1;
 
 $(function () {
+    $(".restart").click(function(){
+        gameStatus = 0;
+        boardState = [['', '', ''], ['', '', ''], ['', '', '']];
+        $(".column").css("background-image", "none");
+    });
+
     $(".column").click(function () {
         if (gameStatus == 0) {
             var row = $(this).data('row');
@@ -18,15 +24,22 @@ function getCPUMove() {
     $.ajax({
         method: "POST",
         dataType: "json",
-        contentType: "application/json; charset=utf-8",
+        contentType: "application/json",
         url: "http://localhost/docler-holding/api/public/tictactoe/move",
         data: JSON.stringify({
             level: level,
             boardState: boardState
         }),
         success: function (data) {
+            console.log(data);
+
             gameStatus = data.gameStatus;
-            setBoardStateCell(data.lastCPUMove[0], data.lastCPUMove[1], data.lastCPUMove[2]);
+
+            if (data.lastCPUMove != null) {
+                setBoardStateCell(data.lastCPUMove[0], data.lastCPUMove[1], data.lastCPUMove[2]);
+            } else {
+                showWinner();
+            }
 
             console.log('gameStatus', data.gameStatus);
         },
@@ -41,13 +54,13 @@ function showWinner() {
 
     switch (gameStatus) {
         case 1 :
-            message = 'Player X wins';
+            message = 'CPU WINS';
             break;
         case 2 :
-            message = 'Player O wins';
+            message = 'YOU WIN';
             break;
         case 3 :
-            message = 'Draw';
+            message = 'DRAW GAME';
             break;
     }
 

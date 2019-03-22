@@ -80,7 +80,7 @@ class Game
      */
     public function getLastCPUMove(): array
     {
-        return is_array($this->lastCPUMove) ? $this->lastCPUMove : ['', '', ''];
+        return is_array($this->lastCPUMove) ? $this->lastCPUMove : [];
     }
 
     /**

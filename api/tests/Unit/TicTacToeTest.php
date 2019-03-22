@@ -166,9 +166,9 @@ class TicTacToeTest extends TestCase
     public function testIfGameStatusIsDraw(): void
     {
         $expectedBoard = [
-            0 => ['O', 'X', 'O'],
-            1 => ['X', 'O', 'X'],
-            2 => ['X', 'O', 'X']
+            0 => ['X', 'X', 'O'],
+            1 => ['O', 'O', 'X'],
+            2 => ['X', 'O', 'O']
         ];
 
         $game = new Game(LevelEnum::MEDIUM, 'X');

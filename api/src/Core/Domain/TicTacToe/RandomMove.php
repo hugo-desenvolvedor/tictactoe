@@ -15,7 +15,6 @@ class RandomMove extends Move
     public function makeMove($boardState, $playerUnit = 'X'): array
     {
         $res = [];
-        $move = [];
 
         foreach ($boardState as $rowKey => $rowValue) {
             foreach ($rowValue as $columnKey => $columnValue) {
@@ -30,11 +29,13 @@ class RandomMove extends Move
 
         if (count($res) > 0) {
             $nextMove = $res[array_rand($res)];
-            return [
+            $res = [
                 $nextMove['row'],
                 $nextMove['column'],
                 $playerUnit
             ];
         }
+
+        return $res;
     }
 }

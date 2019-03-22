@@ -26,7 +26,7 @@ class GameMove extends RouteApi
         $game->makeCPUMove($board);
 
         $this->setPayload([
-            'lastCPUMove' => $game->getLastCPUMove(),
+            'lastCPUMove' => count($game->getLastCPUMove()) >  0 ? $game->getLastCPUMove() : null,
             'gameStatus' => $game->getStatus(),
             'boardState' => $game->getBoardState()
         ]);
