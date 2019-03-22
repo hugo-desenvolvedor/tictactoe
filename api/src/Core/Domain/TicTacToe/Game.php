@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\TicTacToe;
 
+use App\TicTacToe\Factories\MoveFactory;
+
 class Game
 {
     use Player;
@@ -52,25 +54,13 @@ class Game
     public function makeCPUMove(array $boardState)
     {
         $this->board->setBoardState($boardState);
-
         $this->gameStatus->setActualGameStatus($this->board);
 
-        $move = null;
-
         if ($this->gameStatus->getStatus() == \App\Enums\GameStatusEnum::DEFAULT) {
-            //TODO: Caso clássico de Factory
-            switch ($this->level) {
-                case 0 :
-                    $move = new SequentialMove();
-                    break;
-                default :
-                    $move = new RandomMove();
-            }
+            $move = MoveFactory::create($this->level);
 
             $this->lastCPUMove = $move->makeMove($boardState, $this->getPlayerUnit());
-
             $this->board->setMoveInBoardState($this->lastCPUMove);
-
             $this->gameStatus->setActualGameStatus($this->board);
         }
     }
@@ -92,6 +82,8 @@ class Game
     }
 
     /**
+     * Get the game status Running | X Wins | CPU Wins | Draw
+     *
      * @return int
      */
     public function getStatus(): int

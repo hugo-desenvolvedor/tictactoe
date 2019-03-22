@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use \App\TicTacToe\{Game, GameStatus, Board};
+use App\TicTacToe\{Factories\MoveFactory, Game, GameStatus, Board, RandomMove, SequentialMove};
 use \App\Enums\{LevelEnum, GameStatusEnum};
 use PHPUnit\Framework\TestCase;
 
@@ -11,6 +11,12 @@ class TicTacToeTest extends TestCase
     public function testCanCreateABoard(): void
     {
         $this->assertInstanceOf(Board::class, new Board());
+    }
+
+    public function testCanCreateAMoveFromFactory(): void
+    {
+        $this->assertInstanceOf(SequentialMove::class, MoveFactory::create(LevelEnum::EASY));
+        $this->assertInstanceOf(RandomMove::class, MoveFactory::create(LevelEnum::MEDIUM));
     }
 
     public function testCanCreateAGameStatus(): void
