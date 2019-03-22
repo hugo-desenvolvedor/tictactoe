@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\TicTacToe;
 
-class SequentialMove extends Move
+class SequentialMove implements MoveInterface
 {
     /**
      * Set the CPU movement in the first empty cell - less chances the CPU wins

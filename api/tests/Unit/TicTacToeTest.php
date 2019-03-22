@@ -13,6 +13,20 @@ class TicTacToeTest extends TestCase
         $this->assertInstanceOf(Board::class, new Board());
     }
 
+    public function testSetAndGetBoardState(): void
+    {
+        $expectedBoard = [
+            0 => ['', '', ''],
+            1 => ['', '', ''],
+            2 => ['', '', '']
+        ];
+
+        $board = new Board();
+        $board->setBoardState($expectedBoard);
+
+        $this->assertEquals($expectedBoard, $board->getBoardState());
+    }
+
     public function testCanCreateAMoveFromFactory(): void
     {
         $this->assertInstanceOf(SequentialMove::class, MoveFactory::create(LevelEnum::EASY));
@@ -28,20 +42,6 @@ class TicTacToeTest extends TestCase
     {
         $this->assertInstanceOf(Game::class, new Game(LevelEnum::EASY, 'X'));
         $this->assertInstanceOf(Game::class, new Game(LevelEnum::MEDIUM, 'X'));
-    }
-
-    public function testSetAndGetBoardState(): void
-    {
-        $expectedBoard = [
-            0 => ['', '', ''],
-            1 => ['', '', ''],
-            2 => ['', '', '']
-        ];
-
-        $board = new Board();
-        $board->setBoardState($expectedBoard);
-
-        $this->assertEquals($expectedBoard, $board->getBoardState());
     }
 
     public function testMakeAMoveInEasyLevel(): void

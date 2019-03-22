@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\TicTacToe;
 
-class RandomMove extends Move
+class RandomMove implements MoveInterface
 {
     /**
      * Set the CPU movement in random cell, like a tiny child - more chances to CPU win
